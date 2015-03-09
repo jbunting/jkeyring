@@ -1,14 +1,20 @@
-package io.bunting.keyring.backends;
+package io.bunting.keyring.backends.file;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 public class PlainTextKeyring extends BaseFileBackedKeyringBackend
 {
-	protected PlainTextKeyring()
+	public PlainTextKeyring(final String appName)
 	{
-		super("keyring_pass.cfg");
+		super(String.format("keyring_%s.cfg", appName));
+	}
+
+	PlainTextKeyring(final Path storage)
+	{
+		super(storage);
 	}
 
 	@Override

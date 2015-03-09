@@ -1,15 +1,15 @@
-package io.bunting.keyring.backends
+package io.bunting.keyring.backends.file
 
 import com.github.goldin.spock.extensions.testdir.TestDir
+import io.bunting.keyring.backends.file.BaseFileBackedKeyringBackend
+import io.bunting.keyring.backends.file.PlainTextKeyring
 import spock.lang.Specification
 
 import java.nio.ByteBuffer
 import java.nio.CharBuffer
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 
-/**
- * TODO: Document this class
- */
 class BaseFileBackedKeyringBackendTest extends Specification
 {
 	@TestDir(baseDir = "target/test-temp", clean = false)
@@ -18,26 +18,9 @@ class BaseFileBackedKeyringBackendTest extends Specification
 	def "test get set and get"()
 	{
 		given: "a backend"
-			new File(testDir, "keyring_store.cfg").delete()
-			def underTest = new BaseFileBackedKeyringBackend(testDir.toPath().resolve("keyring_store.cfg")) {
-				@Override
-				protected byte[] encrypt(final char[] password)
-				{
-					ByteBuffer bb = StandardCharsets.UTF_8.encode(CharBuffer.wrap(password));
-					byte[] bytes = new byte[bb.limit()];
-					bb.get(bytes);
-					return bytes;
-				}
-
-				@Override
-				protected char[] decrypt(final byte[] encryptedPassword)
-				{
-					CharBuffer cb = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encryptedPassword));
-					char[] chars = new char[cb.limit()];
-					cb.get(chars);
-					return chars;
-				}
-			}
+			def store = new File(testDir, "keyring_store.cfg").toPath()
+			Files.deleteIfExists(store)
+			def underTest = new PlainTextKeyring(store)
 		expect: "when i get a password it will be null"
 			null == underTest.getPassword("test_service", "johnny82")
 		when: "i set then get a password"
@@ -48,5 +31,15 @@ class BaseFileBackedKeyringBackendTest extends Specification
 			underTest.setPassword("other_service", "johnny82", "password1".toCharArray())
 		then: "it has the right password"
 			"password1".toCharArray() == underTest.getPassword("other_service", "johnny82")
+		expect: "the store exists"
+			Files.exists(store)
+		and: "the store contains both usernames and services"
+			def contents = Files.readAllLines(store, StandardCharsets.UTF_8).join("\n")
+			contents.contains("test_service")
+			contents.contains("other_service")
+			contents.contains("johnny82")
+		and: "the store does NOT contain either password"
+			!contents.contains("hunter2")
+			!contents.contains("password1")
 	}
 }

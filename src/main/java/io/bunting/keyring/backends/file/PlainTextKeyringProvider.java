@@ -1,4 +1,4 @@
-package io.bunting.keyring.backends;
+package io.bunting.keyring.backends.file;
 
 import io.bunting.keyring.backend.KeyringBackend;
 import io.bunting.keyring.backend.KeyringBackendProvider;
@@ -27,8 +27,8 @@ public class PlainTextKeyringProvider extends KeyringBackendProvider
 	}
 
 	@Override
-	public KeyringBackend create()
+	public KeyringBackend create(final String appName)
 	{
-		return new PlainTextKeyring();
+		return new PlainTextKeyring(appName);
 	}
 }

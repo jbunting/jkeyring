@@ -1,4 +1,4 @@
-package io.bunting.keyring.backends;
+package io.bunting.keyring.backends.file;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

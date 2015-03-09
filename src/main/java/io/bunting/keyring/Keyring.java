@@ -6,8 +6,6 @@ package io.bunting.keyring;
  */
 public interface Keyring
 {
-	static final Keyring INSTANCE = new DefaultKeyring();
-
 	/**
 	 * Returns the password stored in the active keyring. If the password does not exist, it will return {@code null}.
 	 */

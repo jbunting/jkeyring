@@ -12,9 +12,9 @@ public class DefaultKeyring implements Keyring
 		this.backend = backend;
 	}
 
-	public DefaultKeyring()
+	public DefaultKeyring(final String appName)
 	{
-		this(KeyringBackendProvider.loadMostSuitableBackend());
+		this(KeyringBackendProvider.loadMostSuitableBackend(appName));
 	}
 
 	@Override

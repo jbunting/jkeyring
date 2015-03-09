@@ -53,9 +53,9 @@ public abstract class KeyringBackendProvider
 	 * Instantiates the backend.
 	 * @return
 	 */
-	public abstract KeyringBackend create();
+	public abstract KeyringBackend create(final String appName);
 
-	public static KeyringBackend loadMostSuitableBackend()
+	public static KeyringBackend loadMostSuitableBackend(final String appName)
 	{
 		final ServiceLoader<KeyringBackendProvider> providers = ServiceLoader.load(KeyringBackendProvider.class);
 
@@ -81,7 +81,7 @@ public abstract class KeyringBackendProvider
 				return o2.priority() - o1.priority();
 			}
 		});
-		final KeyringBackend backend = suitableProviders.isEmpty() ? null : suitableProviders.get(0).create();
+		final KeyringBackend backend = suitableProviders.isEmpty() ? null : suitableProviders.get(0).create(appName);
 		return backend;
 	}
 }
