@@ -82,8 +82,7 @@ public class OSXKeyringBackend implements KeyringBackend {
       ProcessResult result = new ProcessExecutor("security",
               "delete-generic-password",
               "-a", username,
-              "-s", service,
-              "-U").exitValue(0).execute();
+              "-s", service).exitValue(0).execute();
     } catch (IOException | InterruptedException | TimeoutException e) {
       throw new RuntimeException("Failed to set password for user " + username + " for service " + service + ".", e);
     }
