@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,11 +22,15 @@ public abstract class KeyringBackendProvider
 {
 	private static final Logger logger = LoggerFactory.getLogger(KeyringBackendProvider.class);
 
-	private final String name;
+	private final String appName;
 
-	protected KeyringBackendProvider(final String name)
+	protected KeyringBackendProvider(final String appName)
 	{
-		this.name = name;
+		this.appName = appName;
+	}
+
+	public String getAppName() {
+		return appName;
 	}
 
 	/**
@@ -65,7 +68,7 @@ public abstract class KeyringBackendProvider
 		{
 			if (provider.priority() < 0)
 			{
-				logger.info("Backend {} determined unsuitable for the current system. {}", provider.name, provider.getUnsuitableReason());
+				logger.info("Backend {} determined unsuitable for the current system. {}", provider.appName, provider.getUnsuitableReason());
 			}
 			else
 			{
