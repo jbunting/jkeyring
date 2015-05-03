@@ -34,6 +34,16 @@
 			<artifactId>metainf-services</artifactId>
 			<version>1.5</version>
 		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nativelibs4java</groupId>
+			<artifactId>jnaerator</artifactId>
+			<version>0.12</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
@@ -79,6 +89,14 @@
 					</dependency>
 				</dependencies>
 
+			</plugin>
+			<plugin>
+				<groupId>com.nativelibs4java</groupId>
+				<artifactId>maven-jnaerator-plugin</artifactId>
+				<version>0.12</version>
+				<configuration>
+					<javaOutputDirectory>${project.basedir}/src/main/java</javaOutputDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
