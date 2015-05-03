@@ -25,4 +25,26 @@ class OSXKeyringBackendTest extends Specification {
     then: "it has the right password"
       "password1".toCharArray() == underTest.getPassword("other_service", "johnny82")
   }
+
+  def "test delete"()
+  {
+    given: "the provider"
+      def provider = new OSXKeyringProvider();
+      if (provider.priority() < 0) {
+        throw new AssumptionViolatedException("${provider.getAppName()} provider is not available on this system.")
+      }
+    and: "a backend"
+      def underTest = provider.create("jkeyring-test")
+    expect: "passwords are in the store"
+      "hunter2".toCharArray() == underTest.getPassword("test_service", "johnny82")
+      "password1".toCharArray() == underTest.getPassword("other_service", "johnny82")
+    when: "i delete a password"
+      underTest.deletePassword("test_service", "johnny82")
+    then: "it will be null"
+      null == underTest.getPassword("test_service", "johnny82")
+    when: "i delete another password"
+      underTest.deletePassword("other_service", "johnny82")
+    then: "it will be null"
+      null == underTest.getPassword("other_service", "johnny82")
+  }
 }
