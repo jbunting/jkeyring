@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * TODO: Document this class
+ * This is the direct interface to the gnome-keyring library. It should be used through {@link #INSTANCE}. The methods
+ * are all constructed to reflect the exact methods available in gnome-keyring.h. Changing them will cause pain
+ * (and probably breakage).
  */
 public interface GKLib extends Library {
   GKLib INSTANCE = (GKLib) Native.loadLibrary("gnome-keyring", GKLib.class);
