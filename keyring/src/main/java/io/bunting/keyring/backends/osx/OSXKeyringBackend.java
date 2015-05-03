@@ -32,7 +32,7 @@ public class OSXKeyringBackend implements KeyringBackend {
               "find-generic-password",
               "-g",
               "-a", username,
-              "-s", service).readOutput(true).exitValue(0).execute().outputUTF8();
+              "-s", service).readOutput(true).exitValues(0, 44).execute().outputUTF8();
       if ("password: \n".equals(output)) {
         return new char[0];
       } else {

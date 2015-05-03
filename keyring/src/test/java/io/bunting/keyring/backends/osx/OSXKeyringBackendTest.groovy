@@ -2,7 +2,9 @@ package io.bunting.keyring.backends.osx
 
 import org.junit.internal.AssumptionViolatedException
 import spock.lang.Specification
+import spock.lang.Stepwise
 
+@Stepwise
 class OSXKeyringBackendTest extends Specification {
 
   def "test get set and get"()
