@@ -5,75 +5,77 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>io.bunting.keyring</groupId>
-	<artifactId>keyring</artifactId>
+	<artifactId>project</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.10</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.3.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ini4j</groupId>
-			<artifactId>ini4j</artifactId>
-			<version>0.5.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.kohsuke.metainf-services</groupId>
-			<artifactId>metainf-services</artifactId>
-			<version>1.5</version>
-		</dependency>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>4.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.nativelibs4java</groupId>
-			<artifactId>jnaerator</artifactId>
-			<version>0.12</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zeroturnaround</groupId>
-			<artifactId>zt-exec</artifactId>
-			<version>1.8</version>
-		</dependency>
+	<modules>
+		<module>jkeyring</module>
+	</modules>
 
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.3.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.spockframework</groupId>
-			<artifactId>spock-core</artifactId>
-			<version>0.7-groovy-2.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.goldin</groupId>
-			<artifactId>spock-extensions</artifactId>
-			<version>0.1.4</version>
-			<scope>test</scope>
-		</dependency>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ini4j</groupId>
+				<artifactId>ini4j</artifactId>
+				<version>0.5.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.kohsuke.metainf-services</groupId>
+				<artifactId>metainf-services</artifactId>
+				<version>1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev.jna</groupId>
+				<artifactId>jna</artifactId>
+				<version>4.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>zt-exec</artifactId>
+				<version>1.8</version>
+			</dependency>
 
-	</dependencies>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>2.3.8</version>
+			</dependency>
+			<dependency>
+				<groupId>org.spockframework</groupId>
+				<artifactId>spock-core</artifactId>
+				<version>0.7-groovy-2.0</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.github.goldin</groupId>
+				<artifactId>spock-extensions</artifactId>
+				<version>0.1.4</version>
+				<scope>test</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -99,14 +101,6 @@
 					</dependency>
 				</dependencies>
 
-			</plugin>
-			<plugin>
-				<groupId>com.nativelibs4java</groupId>
-				<artifactId>maven-jnaerator-plugin</artifactId>
-				<version>0.12</version>
-				<configuration>
-					<javaOutputDirectory>${project.basedir}/src/main/java</javaOutputDirectory>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
