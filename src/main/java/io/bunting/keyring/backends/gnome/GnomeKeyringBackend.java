@@ -18,12 +18,16 @@ class GnomeKeyringBackend  implements KeyringBackend{
   private static final String SERVICE_ATTR = "service";
 
   private static GKLib.GnomeKeyringPasswordSchema createPasswordSchema() {
-    GKLib.GnomeKeyringPasswordSchema passwordSchema = new GKLib.GnomeKeyringPasswordSchema();
-    passwordSchema.attributes[0] = new GKLib.GnomeKeyringAttribute();
-    passwordSchema.attributes[0].name = USERNAME_ATTR;
-    passwordSchema.attributes[1] = new GKLib.GnomeKeyringAttribute();
-    passwordSchema.attributes[1].name = SERVICE_ATTR;
-    return passwordSchema;
+    if (isSupported()) {
+      GKLib.GnomeKeyringPasswordSchema passwordSchema = new GKLib.GnomeKeyringPasswordSchema();
+      passwordSchema.attributes[0] = new GKLib.GnomeKeyringAttribute();
+      passwordSchema.attributes[0].name = USERNAME_ATTR;
+      passwordSchema.attributes[1] = new GKLib.GnomeKeyringAttribute();
+      passwordSchema.attributes[1].name = SERVICE_ATTR;
+      return passwordSchema;
+    } else {
+      return null;
+    }
   }
 
   private final GKLib gklib;
