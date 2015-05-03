@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * TODO: Document this class
  */
 public class OSXKeyringBackend implements KeyringBackend {
-  private static final Pattern outputPattern = Pattern.compile("password:\\s*(?:0x(?<hex>X[0-9A-F]+)\\s*)?(?:\"(?<pw>X.*)\")?");
+  private static final Pattern outputPattern = Pattern.compile("password:\\s*(?:0x(?<hex>[0-9A-F]+)\\s*)?(?:\"(?<pw>.*)\")?");
 
   private final String appName;
 
@@ -40,18 +40,25 @@ public class OSXKeyringBackend implements KeyringBackend {
       else if ("password: \n".equals(output)) {
         return null;
       } else {
-        Matcher matcher = outputPattern.matcher(output);
-        String hex = matcher.group("hex");
-        String pw = matcher.group("pw");
-
-        if (hex != null) {
-          return unhexlify(hex).toCharArray();
-        } else {
-          return pw.toCharArray();
-        }
+        return extractPasswordFromOutput(output);
       }
     } catch (IOException | InterruptedException | TimeoutException e) {
       throw new RuntimeException("Failed to get password for user " + username + " for service " + service + ".", e);
+    }
+  }
+
+  private static char[] extractPasswordFromOutput(String output) {
+    Matcher matcher = outputPattern.matcher(output);
+    if (!matcher.find()) {
+      throw new IllegalArgumentException("Could not parse output: " + output);
+    }
+    String hex = matcher.group("hex");
+    String pw = matcher.group("pw");
+
+    if (hex != null) {
+      return unhexlify(hex).toCharArray();
+    } else {
+      return pw.toCharArray();
     }
   }
 

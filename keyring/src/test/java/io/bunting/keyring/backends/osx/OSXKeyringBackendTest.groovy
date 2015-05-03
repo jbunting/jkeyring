@@ -49,4 +49,33 @@ class OSXKeyringBackendTest extends Specification {
     then: "it will be null"
       null == underTest.getPassword("other_service", "johnny82")
   }
+
+  def "test extracting password from output"() {
+    expect: "the password is hunter2"
+      "hunter2".toCharArray() == OSXKeyringBackend.extractPasswordFromOutput(testOutput)
+  }
+
+
+  static def testOutput = """
+keychain: "/Users/cpenner/Library/Keychains/login.keychain"
+class: "genp"
+attributes:
+    0x00000007 <blob>="test_service"
+    0x00000008 <blob>=<NULL>
+    "acct"<blob>="johnny82"
+    "cdat"<timedate>=0x32303135303530333231343932355A00  "20150503214925Z\\000"
+    "crtr"<uint32>=<NULL>
+    "cusi"<sint32>=<NULL>
+    "desc"<blob>=<NULL>
+    "gena"<blob>=<NULL>
+    "icmt"<blob>=<NULL>
+    "invi"<sint32>=<NULL>
+    "mdat"<timedate>=0x32303135303530333231343932355A00  "20150503214925Z\\000"
+    "nega"<sint32>=<NULL>
+    "prot"<blob>=<NULL>
+    "scrp"<sint32>=<NULL>
+    "svce"<blob>="test_service"
+    "type"<uint32>=<NULL>
+password: "hunter2"
+"""
 }
