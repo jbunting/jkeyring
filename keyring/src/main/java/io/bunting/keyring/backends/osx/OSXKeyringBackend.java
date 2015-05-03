@@ -28,13 +28,17 @@ public class OSXKeyringBackend implements KeyringBackend {
   @Override
   public char[] getPassword(String service, String username) {
     try {
-      String output = new ProcessExecutor("security",
+      ProcessResult result = new ProcessExecutor("security",
               "find-generic-password",
               "-g",
               "-a", username,
-              "-s", service).readOutput(true).exitValues(0, 44).execute().outputUTF8();
-      if ("password: \n".equals(output)) {
-        return new char[0];
+              "-s", service).readOutput(true).exitValues(0, 44).execute();
+      String output = result.outputUTF8();
+      if (result.getExitValue() == 44) {
+        return null;
+      }
+      else if ("password: \n".equals(output)) {
+        return null;
       } else {
         Matcher matcher = outputPattern.matcher(output);
         String hex = matcher.group("hex");
