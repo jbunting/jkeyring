@@ -3,10 +3,12 @@ package io.bunting.keyring.backends.gnome;
 import io.bunting.keyring.backend.KeyringBackend;
 import io.bunting.keyring.backend.KeyringBackendProvider;
 import io.bunting.keyring.support.gnome.GKLib;
+import org.kohsuke.MetaInfServices;
 
 /**
  * TODO: Document this class
  */
+@MetaInfServices
 public class GnomeKeyringProvider extends KeyringBackendProvider {
   private static final boolean SUPPORTED;
 
@@ -21,7 +23,7 @@ public class GnomeKeyringProvider extends KeyringBackendProvider {
     SUPPORTED = supported;
   }
 
-  protected GnomeKeyringProvider() {
+  public GnomeKeyringProvider() {
     super("gnome");
   }
 

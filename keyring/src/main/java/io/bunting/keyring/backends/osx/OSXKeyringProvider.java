@@ -2,10 +2,12 @@ package io.bunting.keyring.backends.osx;
 
 import io.bunting.keyring.backend.KeyringBackend;
 import io.bunting.keyring.backend.KeyringBackendProvider;
+import org.kohsuke.MetaInfServices;
 
 /**
  * TODO: Document this class
  */
+@MetaInfServices
 public class OSXKeyringProvider extends KeyringBackendProvider {
   public OSXKeyringProvider() {
     super("OS X");

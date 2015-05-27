@@ -58,15 +58,25 @@ public abstract class KeyringBackendProvider
 	 */
 	public abstract KeyringBackend create(final String appName);
 
-	public static KeyringBackend loadMostSuitableBackend(final String appName)
+	public static KeyringBackend loadMostSuitableBackend(final String appName) {
+		return loadMostSuitableBackend(appName, 0);
+	}
+
+	public static KeyringBackend loadMostSuitableBackend(final String appName, final int minimumPriority)
 	{
+		final List<KeyringBackendProvider> suitableProviders = loadAllSuitableProviders(minimumPriority);
+		final KeyringBackend backend = suitableProviders.isEmpty() ? null : suitableProviders.get(0).create(appName);
+		return backend;
+	}
+
+	public static List<KeyringBackendProvider> loadAllSuitableProviders(int minimumPriority) {
 		final ServiceLoader<KeyringBackendProvider> providers = ServiceLoader.load(KeyringBackendProvider.class);
 
 		final List<KeyringBackendProvider> suitableProviders = new ArrayList<KeyringBackendProvider>();
 
 		for (KeyringBackendProvider provider: providers)
 		{
-			if (provider.priority() < 0)
+			if (provider.priority() < minimumPriority)
 			{
 				logger.info("Backend {} determined unsuitable for the current system. {}", provider.appName, provider.getUnsuitableReason());
 			}
@@ -75,16 +85,13 @@ public abstract class KeyringBackendProvider
 				suitableProviders.add(provider);
 			}
 		}
-		Collections.sort(suitableProviders, new Comparator<KeyringBackendProvider>()
-		{
+		Collections.sort(suitableProviders, new Comparator<KeyringBackendProvider>() {
 			@Override
-			public int compare(final KeyringBackendProvider o1, final KeyringBackendProvider o2)
-			{
+			public int compare(final KeyringBackendProvider o1, final KeyringBackendProvider o2) {
 				// reverse priority -- we want "highest priority" to be at index 0
 				return o2.priority() - o1.priority();
 			}
 		});
-		final KeyringBackend backend = suitableProviders.isEmpty() ? null : suitableProviders.get(0).create(appName);
-		return backend;
+		return suitableProviders;
 	}
 }

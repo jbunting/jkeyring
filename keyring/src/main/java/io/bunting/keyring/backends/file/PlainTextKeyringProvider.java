@@ -8,7 +8,7 @@ import org.kohsuke.MetaInfServices;
 @MetaInfServices
 public class PlainTextKeyringProvider extends KeyringBackendProvider
 {
-	protected PlainTextKeyringProvider()
+	public PlainTextKeyringProvider()
 	{
 		super("plainText");
 	}
