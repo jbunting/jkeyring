@@ -16,7 +16,7 @@
 
 	<modules>
 		<module>keyring</module>
-		<module>keyring-maven</module>
+		<!--<module>keyring-maven</module>-->
 	</modules>
 
 	<dependencyManagement>
