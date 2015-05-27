@@ -73,12 +73,6 @@
 				<version>1.0-groovy-2.4</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<groupId>com.github.goldin</groupId>
-				<artifactId>spock-extensions</artifactId>
-				<version>0.1.4</version>
-				<scope>test</scope>
-			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -107,6 +101,26 @@
 					</dependency>
 				</dependencies>
 
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.4.201502262128</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

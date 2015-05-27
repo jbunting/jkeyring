@@ -1,20 +1,34 @@
 package io.bunting.keyring.backends.file
 
-import com.github.goldin.spock.extensions.testdir.TestDir
-import io.bunting.keyring.backends.file.BaseFileBackedKeyringBackend
-import io.bunting.keyring.backends.file.PlainTextKeyring
+import org.apache.commons.io.FileUtils
 import spock.lang.Specification
 
-import java.nio.ByteBuffer
-import java.nio.CharBuffer
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
 class BaseFileBackedKeyringBackendTest extends Specification
 {
-	@TestDir(baseDir = "target/test-temp", clean = false)
-	File testDir;
+	File testDir = new File("target/test-temp/BaseFileBackedKeyringBackendTest");
 
+	def setup()
+	{
+		if (testDir.exists())
+		{
+			FileUtils.forceDelete(testDir)
+		}
+		if (!testDir.mkdirs())
+		{
+			throw new IllegalStateException("I can't make my dir!")
+		}
+	}
+
+	def cleanup()
+	{
+		if (testDir.exists())
+		{
+			FileUtils.forceDelete(testDir)
+		}
+	}
 	def "test get set and get"()
 	{
 		given: "a backend"

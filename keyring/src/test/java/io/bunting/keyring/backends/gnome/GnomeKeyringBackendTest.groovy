@@ -1,11 +1,8 @@
 package io.bunting.keyring.backends.gnome
 
-import com.github.goldin.spock.extensions.testdir.TestDir
 import org.junit.internal.AssumptionViolatedException
 import spock.lang.Specification
 import spock.lang.Stepwise
-
-import java.nio.file.Files
 
 /**
  * TODO: Document this class
