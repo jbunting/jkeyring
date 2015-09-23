@@ -5,6 +5,21 @@ import io.bunting.keyring.Keyring;
 
 public class KeyringApp
 {
+	private enum Action
+	{
+		GET, SET, DELETE;
+
+		public static Action asAction(String str)
+		{
+			for (Action me : Action.values())
+			{
+				if (me.name().equalsIgnoreCase(str))
+					return me;
+			}
+			return null;
+		}
+	}
+
 	public static void main(final String[] args)
 	{
 		if (args.length < 3)
@@ -13,14 +28,21 @@ public class KeyringApp
 			System.exit(1);
 		}
 
-		String action = args[0].toLowerCase();
+		Action action = Action.asAction(args[0]);
+
+		if (action == null)
+		{
+			printHelp();
+			System.exit(1);
+		}
+
 		String service = args[1].toLowerCase();
 		String username = args[2].toLowerCase();
 		String password;
 
 		switch(action)
 		{
-		case "get":
+		case GET:
 			if (args.length != 3)
 			{
 				printHelp();
@@ -40,7 +62,7 @@ public class KeyringApp
 			}
 			return;
 
-		case "set":
+		case SET:
 			if (args.length != 4)
 			{
 				printHelp();
@@ -51,7 +73,7 @@ public class KeyringApp
 			set(service, username, password);
 			return;
 
-		case "delete":
+		case DELETE:
 			if (args.length != 3)
 			{
 				printHelp();
@@ -60,10 +82,6 @@ public class KeyringApp
 
 			delete(service, username);
 			return;
-
-		default:
-			printHelp();
-			System.exit(1);
 		}
 	}
 

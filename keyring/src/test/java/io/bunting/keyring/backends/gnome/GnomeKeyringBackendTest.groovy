@@ -11,7 +11,7 @@ import spock.lang.Ignore
 @Stepwise
 class GnomeKeyringBackendTest extends Specification {
 
-  @Ignore
+  @Ignore("This fails for environment reasons on travis.")
   def "test get set and get"()
   {
     given: "the provider"
@@ -33,7 +33,7 @@ class GnomeKeyringBackendTest extends Specification {
       "password1".toCharArray() == underTest.getPassword("other_service", "johnny82")
   }
 
-  @Ignore
+  @Ignore("This fails for environment reasons on travis.")
   def "test delete"()
   {
     given: "the provider"
