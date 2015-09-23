@@ -4,12 +4,12 @@
 	<parent>
 	<groupId>io.bunting.keyring</groupId>
 	<artifactId>project</artifactId>
-	<version>0.2.0</version>
+	<version>0.3.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.bunting.keyring</groupId>
 	<artifactId>keyring</artifactId>
-	<version>0.2.0</version>
+	<version>0.3.0-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
